@@ -18,7 +18,7 @@ const stylesApp = {
   marginTop: 40
 }
 store.dispatch(fetchAllServices());
-store.dispatch(fetchAllEmployees());
+ store.dispatch(fetchAllEmployees());
 
 if(localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);

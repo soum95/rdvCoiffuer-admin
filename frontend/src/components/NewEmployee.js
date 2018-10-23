@@ -1,37 +1,57 @@
 import React from 'react';
-
+import axios from 'axios';
+const apiUrl = 'http://localhost:5000/employees';
 class NewEmployee extends React.Component {
-  state = {
-    firstname: '',
-    lastname: '',
-    job: '',
-    photo: '',
-    description: ''
-  };
-  fileChangedHandler = e => {
-    this.setState({photo :e.target.files[0]})
-  }
-  handleInputChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
 
-  handleSubmit = e => {
-    e.preventDefault();
-    if (this.state.firstname.trim() && this.state.lastname.trim() &&  this.state.job.trim()) {
-      this.props.onAddEmployee(this.state);
-      console.log(this.state);
-      this.handleReset();
+  constructor(){
+    super(); 
+    this.state= {
+      firstname: '',
+      lastname: '',
+      job: '',
+      description: '',
+      img:''
     }
-  };
+  }
+  
+  handleInputChange = (e)=>{
+    this.setState({
+      [e.target.name]: e.target.value  
+    })
+  }
+  handleSubmit = (e)=>{ 
+    e.preventDefault();
+ 
+    axios.post( `${apiUrl}/add`,this.state)
+     .then((result) => {
+      console.log('success' , result) 
+     })
+     .catch((err)=>{  
+      console.log("err", err ); 
+          }); 
+  } 
+  fileChangedHandler = (e)=>{
 
+    var file  =   e.target.files[0]; 
+    let data = new FormData()
+    data.set('file', file);  
+    this.setState({
+      img: data
+    })
+     axios.post( `${apiUrl}/file`, data )
+      .then((result) => {
+       console.log('succeess' , result) 
+      })
+      .catch((err)=>{ 
+        console.log('errr', err )
+      });
+  } 
   handleReset = () => {
     this.setState({
         firstname: '',
         lastname: '',
         job: '',
-        photo: '',
+        img: '',
         description: ''
     });
   };
@@ -70,17 +90,7 @@ class NewEmployee extends React.Component {
       value={ this.state.job }
     />
   </div>
-  <div className="form-group">
- 
-  <input
-  type="file"
-  placeholder="path"
-  className="form-control"
-  name="photo"
-onChange={this.handleInputChange} 
-
-/>
-</div>
+  
 
   
           <div className="form-group">
@@ -94,6 +104,17 @@ onChange={this.handleInputChange}
               value={ this.state.description }>
             </textarea>
           </div>
+          <div className="form-group">
+ 
+  <input
+  type="file"
+  placeholder="path"
+  className="form-control"
+  name="file"
+onChange={this.fileChangedHandler } 
+
+/>
+</div>
           <div className="form-group">
             <button type="submit" className="btn btn-primary">Add Employee</button>
             <button type="button" className="btn btn-warning" onClick={ this.handleReset }>

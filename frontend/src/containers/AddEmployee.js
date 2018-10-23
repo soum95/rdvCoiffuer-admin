@@ -5,10 +5,12 @@ import NewEmployee from '../components/NewEmployee';
 const mapDispatchToProps = dispatch => {
   return {
     onAddEmployee: employee => {
-      dispatch(addEmployee(employee));
-    }
-  };
-};
+      dispatch(addEmployee(employee));}
+    // },
+    // onAddFile: file=> {
+    //   dispatch(addFile(file));
+    // }
+};};
 
 export default connect(
   null,

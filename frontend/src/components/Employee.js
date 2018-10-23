@@ -9,13 +9,13 @@ const styles = {
   borderRadius: '7px'
 };
 
-export default ({ employee: { firstname,lastname,job,photo,description, _id }, onDelete  }) => {
+export default ({ employee: { firstname,lastname,job,description,img, _id }, onDelete  }) => {
   return (
     <div style={ styles }>
       <h2>{ firstname}</h2>
       <h2>{ lastname }</h2>
       <h2>{ job }</h2>
-      <div> <img src={photo}/> </div>
+      <div> <img src={img}/> </div>
       <p>{ description }</p>
       <button className="btn btn-danger" type="button" onClick={() => onDelete(_id)}>
       Remove

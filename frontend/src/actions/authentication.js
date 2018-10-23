@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {  ADD_SERVICE,DELETE_EMPLOYEE,ADD_EMPLOYEE,FETCH_EMPLOYEE,FETCH_SERVICE,GET_ERRORS, SET_CURRENT_USER,DELETE_SERVICE } from './types';
+import {  ADD_SERVICE,DELETE_EMPLOYEE,ADD_FILE,ADD_EMPLOYEE,FETCH_EMPLOYEE,FETCH_SERVICE,GET_ERRORS, SET_CURRENT_USER,DELETE_SERVICE } from './types';
 import setAuthToken from '../setAuthToken';
 import jwt_decode from 'jwt-decode';
 
@@ -9,9 +9,34 @@ const apiUrl = 'http://localhost:5000/services';
 
 const apiUrl2 = 'http://localhost:5000/employees';
 
-export const addEmployee = ({ firstname,lastname,job,photo,description }) => {
+
+// export const addFile = ({ picture }) => {
+//   return (dispatch) => {
+//     return axios.post(`${apiUrl2}/file`, {picture })
+//       .then(response => {
+//         dispatch(addFileSuccess(response.data))
+//       })
+//       .catch(error => {
+//         throw(error);
+//       });
+//   };
+// };
+
+// export const addFileSuccess =  (data) => {
+//   return {
+//     type: ADD_FILE,
+//     payload: {
+//       _id: data._id,
+//       picture:data.picture
+//   }
+// };
+// };
+
+
+
+export const addEmployee = ({ firstname,lastname,job,file,description }) => {
   return (dispatch) => {
-    return axios.post(`${apiUrl2}/add`, {firstname,lastname,job,photo,description })
+    return axios.post(`${apiUrl2}/add`, {firstname,lastname,job,file,description })
       .then(response => {
         dispatch(addEmployeeSuccess(response.data))
       })
@@ -29,7 +54,7 @@ export const addEmployeeSuccess =  (data) => {
       firstname: data.firstname,
       lasttname: data.lastname,
       job: data.job,
-      photo: data.photo,
+      file:data.file,
       description: data.description
     }
   }
